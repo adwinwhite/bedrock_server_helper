@@ -8,6 +8,9 @@ cd "$DIR"
 
 # Create backup
 if [ -d "worlds" ]; then
-    echo "正在备份服务器至 minecraftbe/Ziserver/backups"
+    if [ ! -d "backups" ]; then
+        mkdir backups
+    fi
+    echo "正在备份服务器至 backups"
     tar -pzvcf backups/$(date +%Y.%m.%d.%H.%M.%S).tar.gz worlds
 fi

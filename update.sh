@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DIR="$(dirname "${BASH_SOURCE[0]}")"  # Get the directory name
-DIR="$(realpath "${DIR}")" 
+DIR="$(realpath "${DIR}")"
 
 # Check if server is already started
 if screen -list | grep -q "Ziserver"; then
@@ -35,6 +35,9 @@ if [ "$?" != 0 ]; then
     echo "未能连接至更新服务器（可能因为无网络连接）,跳过更新步骤..."
 else
 # Download server index.html to check latest version
+    if [ ! -d "downloads" ]; then
+        mkdir downloads
+    fi
     wget -O downloads/version.html https://minecraft.net/en-us/download/server/bedrock/
     DownloadURL=$(grep -o 'https://minecraft.azureedge.net/bin-linux/[^"]*' downloads/version.html)
     DownloadFile=$(echo "$DownloadURL" | sed 's#.*/##')
@@ -49,4 +52,3 @@ else
         unzip -o "downloads/$DownloadFile" -x "*server.properties*" "*permissions.json*" "*whitelist.json*"
     fi
 fi
-

@@ -5,6 +5,12 @@ SERVER_DIR="$(realpath "${SERVER_DIR}")"
 
 cd $SERVER_DIR
 
+# Check if there are backups
+if [ ! -d "backups" ]; then
+	echo "There is even no backup directory"
+	exit
+fi
+
 # Check if server is already started
 if screen -list | grep -q "Ziserver"; then
 	echo "服务器在运行中！ 回滚前请停止服务器运行！"
@@ -31,7 +37,7 @@ i=1
 for BACKUP_FILE in backups/*.tar.gz; do
 	if test $choice -eq $i; then
 		echo "你选择了$BACKUP_FILE"
-		tar -xvzf $BACKUP_FILE 
+		tar -xvzf $BACKUP_FILE
 		exit 0
 	fi
 	i=$((i+1))
