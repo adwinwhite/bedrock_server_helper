@@ -23,7 +23,7 @@ fi
 
 # render the map
 if [ ! -d "$WEB_DIR" ]; then
-  mkdir -r "$WEB_DIR"
+  mkdir -p "$WEB_DIR"
 fi
 echo "正在更新网页地图..."
 $PAPY_DIR/PapyrusCs --world "$DIR/worlds/Bedrock level/db" --dim 0 --output "$WEB_DIR" --htmlfile "index.html"
