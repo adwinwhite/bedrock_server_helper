@@ -49,6 +49,11 @@ else
     else
         echo "检测到新版本 $DownloadFile ， 正在更新..."
         wget -O "downloads/$DownloadFile" "$DownloadURL"
+        if [ ! -d "server.properties" ]; then
+            unzip -o "downloads/$DownloadFile"
+            chmod 777 bedrock_server
+        else
         unzip -o "downloads/$DownloadFile" -x "*server.properties*" "*permissions.json*" "*whitelist.json*"
+        fi
     fi
 fi
