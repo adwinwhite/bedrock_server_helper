@@ -6,15 +6,16 @@ DIR="$(realpath "${DIR}")"
 
 PAPY_DIR="$(realpath "${DIR}/../papyruscs")"
 WEB_DIR="$PAPY_DIR/www/map"
-if [ ! -d "$PAPY_DIR" ]; then
+if [ ! -f "$PAPY_DIR/PapyrusCs" ]; then
+  echo "papyrucsc is not installed. \n downloading it.\n"
   pushd "${DIR}/.."
   curl -s https://api.github.com/repos/mjungnickel18/papyruscs/releases/latest \
   | grep "browser_download_url" \
   | cut -d '"' -f 4 \
-  | wget -qi - -o "papyruscs.zip"
+  | wget --show-progress -i - -O "papyruscs.zip"
   # wget "$PAPY_DOWNLOAD_URL" -o "papyruscs.zip"
   if [ ! -d "$PAPY_DIR" ]; then
-    mkdir "$PAPY_DIR"
+    mkdir -p "$PAPY_DIR"
   fi
   unzip "papyruscs.zip" -d "$PAPY_DIR"
   chmod +x "$PAPY_DIR/PapyrusCs"
